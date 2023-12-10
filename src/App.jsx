@@ -1,11 +1,13 @@
 import './App.scss'
-import { Test } from './components/Test'
+// import { Test } from './components/Test'
+import { Board } from './components/Board'
+import { testBoard } from './data'
 
 function App() {
 
   return (
     <>
-      <Test />
+      <Board board={testBoard} />
     </>
   )
 }

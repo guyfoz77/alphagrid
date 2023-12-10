@@ -1,0 +1,24 @@
+.board {
+  display: flex;
+  flex-direction: column;
+  // height: 400px;
+  width: 400px;
+  border: solid white;
+
+  .boardRow {
+    display: flex;
+    flex: 1;
+
+    .boardLetter {
+      border: solid darkcyan;
+      flex: 1;
+      aspect-ratio: 1;
+      font-size: 2rem;
+      margin: 5px;
+      border-radius: 5px;
+    }
+    .occupied {
+      border: solid purple;
+    }
+  }
+}
