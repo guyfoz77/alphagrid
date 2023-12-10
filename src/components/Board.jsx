@@ -1,15 +1,12 @@
-import { testBoard } from '../data'
 import '../sass/Board.scss'
-
-
 
 function BoardRow({ row }) {
   return (
     <div className="boardRow"> {
-      row.map((letter, index) => (
-        letter ?
-          <div className="boardLetter occupied" key={index}>{letter}</div> :
-          <div className="boardLetter blank" key={index}>{letter}</div>
+      row.map((tile, index) => (
+        tile.willContainLetter ?
+          <div className="boardLetter occupied" key={index}>{tile.letter}</div> :
+          <div className="boardLetter blank" key={index}>{tile.letter}</div>
 
       ))}
     </div>
@@ -17,7 +14,7 @@ function BoardRow({ row }) {
 }
 
 export function Board({ board }) {
-  function Letter(letter, row, col, willContainLetter) {
+  function Tile(letter, row, col, willContainLetter) { //tile constuctor
     return {
       letter: letter,
       row: row,
@@ -36,7 +33,7 @@ export function Board({ board }) {
           willContainLetter = true
         }
         newRow.push(
-          new Letter(
+          new Tile(
             board.start[i][j],
             i,
             j,
@@ -48,10 +45,10 @@ export function Board({ board }) {
     }
     return newBoard
   }
-
+  const newBoard = boardBuild(board)
   return (
     <div className="board">{
-      board.map((row, index) => (
+      newBoard.map((row, index) => (
         <BoardRow row={row} key={index} />
       ))
     }
