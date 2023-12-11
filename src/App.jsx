@@ -2,14 +2,14 @@ import './App.scss'
 // import { Test } from './components/Test'
 import { Board } from './components/Board'
 import { testBoard } from './data'
-import { boardBuild } from './scripts/boardBuilder'
+import { getBoard } from './scripts/boardScripts'
 
 function App() {
-  const newBoard = boardBuild(testBoard)
+  const newBoard = getBoard(testBoard)
 
   return (
     <>
-      <Board board={newBoard} />
+      <Board board={newBoard.currentBoard} />
     </>
   )
 }
