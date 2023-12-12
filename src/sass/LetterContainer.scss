@@ -1,0 +1,17 @@
+.letterContainer {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(5, 1fr);
+  width: 90%;
+
+  .letter {
+    border: solid darkcyan;
+    display: flex;
+    place-content: center;
+    flex: 1;
+    aspect-ratio: 1;
+    font-size: 1.4rem;
+    margin: 5px;
+    border-radius: 5px;
+  }
+}

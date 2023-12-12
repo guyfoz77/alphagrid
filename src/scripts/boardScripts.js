@@ -10,7 +10,6 @@ function Tile(letter, row, col, willContainLetter) {
 }
 export function getBoard(boardRaw) {
   //this function converts each letter in the board into an object
-  console.log(boardRaw)
   const newBoard = []
   for (let i = 0; i < boardRaw.solution.length; i++) {
     const newRow = []
