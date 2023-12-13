@@ -13,9 +13,11 @@ function App() {
   function handleOnDrag(e, letter) {
     e.dataTransfer.setData('letter', letter)
   }
-  function handleOnDrop(e) {
+  function handleOnDrop(e, rowIndex, index) {
     const letter = e.dataTransfer.getData('letter')
-    console.log(letter)
+    let newBoard = { ...board }
+    newBoard.currentBoard[rowIndex][index].letter = letter
+    setBoard(newBoard)
   }
   function handleDragOver(e) {
     e.preventDefault()

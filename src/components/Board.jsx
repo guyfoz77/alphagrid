@@ -1,6 +1,6 @@
 import '../sass/Board.scss'
 
-function BoardRow({ row, handleOnDrop, handleDragOver }) {
+function BoardRow({ row, rowIndex, handleOnDrop, handleDragOver }) {
   return (
     <div className="boardRow">
       {' '}
@@ -9,7 +9,7 @@ function BoardRow({ row, handleOnDrop, handleDragOver }) {
           <div
             className="boardLetter occupied"
             key={index}
-            onDrop={(e) => handleOnDrop(e)}
+            onDrop={(e) => handleOnDrop(e, rowIndex, index)}
             onDragOver={(e) => handleDragOver(e)}
           >
             {tile.letter}
@@ -31,6 +31,7 @@ export function Board({ board, handleOnDrop, handleDragOver }) {
         <BoardRow
           row={row}
           key={index}
+          rowIndex={index}
           handleOnDrop={handleOnDrop}
           handleDragOver={handleDragOver}
         />
