@@ -8,7 +8,7 @@ export function Letters({ letters, handleOnDrag }) {
           draggable={true}
           className="letter"
           key={index}
-          onDragStart={(e) => handleOnDrag(e, letter)}
+          onDragStart={(e) => handleOnDrag(e, letter, index)}
         >
           {letter}
         </div>

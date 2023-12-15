@@ -3,7 +3,7 @@ import '../sass/Board.scss'
 function BoardRow({ row, rowIndex, handleOnDrop, handleDragOver }) {
   return (
     <div className="boardRow">
-      {' '}
+      {/* {' '} */}
       {row.map((tile, index) =>
         tile.willContainLetter ? (
           <div
