@@ -1,6 +1,12 @@
 import '../sass/Board.scss'
 
-function BoardRow({ row, rowIndex, handleOnDrop, handleDragOver }) {
+function BoardRow({
+  row,
+  rowIndex,
+  handleOnDropBoard,
+  handleDragOver,
+  handleOnDragBoard,
+}) {
   return (
     <div className="boardRow">
       {/* {' '} */}
@@ -9,8 +15,10 @@ function BoardRow({ row, rowIndex, handleOnDrop, handleDragOver }) {
           <div
             className="boardLetter occupied"
             key={index}
-            onDrop={(e) => handleOnDrop(e, rowIndex, index)}
+            onDrop={(e) => handleOnDropBoard(e, rowIndex, index)}
             onDragOver={(e) => handleDragOver(e)}
+            onDrag={(e) => handleOnDragBoard(e, tile.letter, rowIndex, index)}
+            draggable={!!tile.letter}
           >
             {tile.letter}
           </div>
@@ -24,7 +32,12 @@ function BoardRow({ row, rowIndex, handleOnDrop, handleDragOver }) {
   )
 }
 
-export function Board({ board, handleOnDrop, handleDragOver }) {
+export function Board({
+  board,
+  handleOnDropBoard,
+  handleDragOver,
+  handleOnDragBoard,
+}) {
   return (
     <div className="board">
       {board.map((row, index) => (
@@ -32,8 +45,9 @@ export function Board({ board, handleOnDrop, handleDragOver }) {
           row={row}
           key={index}
           rowIndex={index}
-          handleOnDrop={handleOnDrop}
+          handleOnDropBoard={handleOnDropBoard}
           handleDragOver={handleDragOver}
+          handleOnDragBoard={handleOnDragBoard}
         />
       ))}
     </div>

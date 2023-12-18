@@ -5,7 +5,7 @@ import { Board } from './components/Board'
 import { Letters } from './components/Letters'
 import { testBoard } from './data'
 import { BoardObject } from './scripts/boardScripts'
-import { produce } from 'immer'
+// import { produce } from 'immer'
 
 function App() {
   // const newBoard = getBoard(testBoard)
@@ -32,15 +32,7 @@ function App() {
   //   // console.log(newSpareLetters)
   //   setSpareLetters(newSpareLetters)
   // }
-
-  function handleOnDrag(e, letter, index) {
-    e.dataTransfer.setData('letter', letter)
-    e.dataTransfer.setData('index', index)
-  }
-  function handleOnDrop(e, rowIndex, index) {
-    // e.preventDefault()
-    const letter = e.dataTransfer.getData('letter')
-    // const indexInSpareLetters = e.dataTransfer.getData('index')
+  function cloneboard() {
     const newBoard = board.currentBoard.map((row) => {
       const newRow = []
       for (let i = 0; i < row.length; i++) {
@@ -48,6 +40,28 @@ function App() {
       }
       return newRow
     })
+    return newBoard
+  }
+
+  function handleOnDrag(e, letter, index) {
+    e.dataTransfer.setData('letter', letter)
+    e.dataTransfer.setData('index', index)
+  }
+  function handleOnDragBoard(e, letter, rowIndex, index) {
+    e.dataTransfer.setData('letter', letter)
+    const newBoard = cloneboard()
+    newBoard[rowIndex][index] = ''
+    const newBoardRaw = {
+      solution: board.solution,
+      start: newBoard,
+    }
+    setBoard(new BoardObject(newBoardRaw))
+  }
+  function handleOnDropBoard(e, rowIndex, index) {
+    // e.preventDefault()
+    const letter = e.dataTransfer.getData('letter')
+    // const indexInSpareLetters = e.dataTransfer.getData('index')
+    const newBoard = cloneboard()
     newBoard[rowIndex][index] = letter
     const newBoardRaw = {
       solution: board.solution,
@@ -65,8 +79,9 @@ function App() {
     <div className="mainContainer">
       <Board
         board={board.currentBoard}
-        handleOnDrop={handleOnDrop}
+        handleOnDropBoard={handleOnDropBoard}
         handleDragOver={handleDragOver}
+        handleOnDragBoard={handleOnDragBoard}
       />
       <Letters letters={board.startSpareLetters} handleOnDrag={handleOnDrag} />
     </div>
