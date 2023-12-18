@@ -41,6 +41,14 @@ function Tile(letter, row, col, willContainLetter) {
 //   }
 // }
 
+function shuffleArray(array) {
+  //Fisher–Yates shuffle algorithm
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1))
+    ;[array[i], array[j]] = [array[j], array[i]]
+  }
+}
+
 export class BoardObject {
   constructor(boardRaw) {
     this.currentBoard = this.buildBoard(boardRaw)
@@ -66,6 +74,7 @@ export class BoardObject {
     lettersOnBoard.forEach((letter) => {
       spareLetters.splice(spareLetters.indexOf(letter), 1)
     })
+    shuffleArray(spareLetters)
     return spareLetters
   }
 
