@@ -45,6 +45,28 @@ export class BoardObject {
   constructor(boardRaw) {
     this.currentBoard = this.buildBoard(boardRaw)
     this.solution = boardRaw.solution
+    this.startSpareLetters = this.getSpareLetters(boardRaw)
+  }
+
+  getSpareLetters(boardRaw) {
+    const allLetters = []
+    const lettersOnBoard = []
+
+    for (let i = 0; i < boardRaw.solution.length; i++) {
+      for (let j = 0; j < boardRaw.solution[i].length; j++) {
+        if (boardRaw.solution[i][j]) allLetters.push(boardRaw.solution[i][j])
+      }
+    }
+    for (let i = 0; i < boardRaw.start.length; i++) {
+      for (let j = 0; j < boardRaw.start[i].length; j++) {
+        if (boardRaw.start[i][j]) lettersOnBoard.push(boardRaw.start[i][j])
+      }
+    }
+    const spareLetters = [...allLetters]
+    lettersOnBoard.forEach((letter) => {
+      spareLetters.splice(spareLetters.indexOf(letter), 1)
+    })
+    return spareLetters
   }
 
   buildBoard(boardRaw) {
