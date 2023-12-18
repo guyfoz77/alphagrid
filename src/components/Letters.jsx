@@ -1,14 +1,19 @@
 import '../sass/letterContainer.scss'
 
 export function Letters({ letters, handleOnDrag }) {
+  const displayLetters = Array.from(
+    { length: Math.max(10, letters.length) },
+    (_, index) => letters[index] || ''
+  )
+
   return (
     <div className="letterContainer">
-      {letters.map((letter, index) => (
+      {displayLetters.map((letter, index) => (
         <div
-          draggable={true}
-          className="letter"
           key={index}
-          onDragStart={(e) => handleOnDrag(e, letter, index)}
+          className={`letter ${letter ? 'draggable' : ''}`}
+          draggable={!!letter}
+          onDragStart={(e) => letter && handleOnDrag(e, letter, index)}
         >
           {letter}
         </div>
