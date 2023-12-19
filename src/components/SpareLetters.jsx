@@ -1,6 +1,6 @@
 import '../sass/letterContainer.scss'
 
-export function Letters({ letters, handleOnDrag }) {
+export function SpareLetters({ letters, handleOnDrag }) {
   const displayLetters = Array.from(
     { length: Math.max(10, letters.length) },
     (_, index) => letters[index] || ''

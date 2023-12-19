@@ -2,9 +2,10 @@ import './App.scss'
 // import { Test } from './components/Test'
 import { useState } from 'react'
 import { Board } from './components/Board'
-import { Letters } from './components/Letters'
+import { SpareLetters } from './components/SpareLetters'
 import { testBoard } from './data'
 import { BoardObject } from './scripts/boardScripts'
+import { GameState } from './scripts/boardScripts'
 // import { produce } from 'immer'
 
 function App() {
@@ -12,26 +13,6 @@ function App() {
   const [board, setBoard] = useState(new BoardObject(testBoard))
   // const [spareLetters, setSpareLetters] = useState(getSpareLetters(board))
 
-  // function getSpareLetters(boardToCompare) {
-  //   const spareLetters = []
-  //   for (let i = 0; i < boardToCompare.solution.length; i++) {
-  //     for (let j = 0; j < boardToCompare.solution[i].length; j++) {
-  //       if (
-  //         boardToCompare.currentBoard[i][j].letter !==
-  //         boardToCompare.solution[i][j]
-  //       ) {
-  //         spareLetters.push(boardToCompare.solution[i][j])
-  //       }
-  //     }
-  //   }
-  //   return spareLetters
-  // }
-  // function removeUsedLetter(index) {
-  //   const newSpareLetters = [...spareLetters]
-  //   newSpareLetters.splice(index, 1)
-  //   // console.log(newSpareLetters)
-  //   setSpareLetters(newSpareLetters)
-  // }
   function cloneboard() {
     const newBoard = board.currentBoard.map((row) => {
       const newRow = []
@@ -70,6 +51,7 @@ function App() {
     const newBoardObject = new BoardObject(newBoardRaw)
     setBoard(newBoardObject)
     // removeUsedLetter(indexInSpareLetters)
+    console.log(new GameState(newBoardRaw))
   }
   function handleDragOver(e) {
     e.preventDefault()
@@ -83,7 +65,10 @@ function App() {
         handleDragOver={handleDragOver}
         handleOnDragBoard={handleOnDragBoard}
       />
-      <Letters letters={board.startSpareLetters} handleOnDrag={handleOnDrag} />
+      <SpareLetters
+        letters={board.startSpareLetters}
+        handleOnDrag={handleOnDrag}
+      />
     </div>
   )
 }
