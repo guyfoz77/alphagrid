@@ -60,7 +60,7 @@ class LetterObject {
 
 export class GameState {
   constructor(boardRaw) {
-    this.currentBoard = boardRaw.start
+    this.currentBoard = boardRaw.current
     this.solution = boardRaw.solution
     this.letters = this.getLetters(boardRaw)
   }
@@ -69,15 +69,15 @@ export class GameState {
     const letters = []
 
     //find letters already on board
-    for (let i = 0; i < boardRaw.start.length; i++) {
-      for (let j = 0; j < boardRaw.start[i].length; j++) {
-        if (boardRaw.start[i][j]) {
+    for (let i = 0; i < boardRaw.current.length; i++) {
+      for (let j = 0; j < boardRaw.current[i].length; j++) {
+        if (boardRaw.current[i][j]) {
           const boardPosition = {
             col: j,
             row: i,
           }
           letters.push(
-            new LetterObject(boardRaw.start[i][j], true, boardPosition, null)
+            new LetterObject(boardRaw.current[i][j], true, boardPosition, null)
           )
         }
       }
@@ -91,9 +91,9 @@ export class GameState {
         if (boardRaw.solution[i][j]) allLetters.push(boardRaw.solution[i][j])
       }
     }
-    for (let i = 0; i < boardRaw.start.length; i++) {
-      for (let j = 0; j < boardRaw.start[i].length; j++) {
-        if (boardRaw.start[i][j]) lettersOnBoard.push(boardRaw.start[i][j])
+    for (let i = 0; i < boardRaw.current.length; i++) {
+      for (let j = 0; j < boardRaw.current[i].length; j++) {
+        if (boardRaw.current[i][j]) lettersOnBoard.push(boardRaw.current[i][j])
       }
     }
     const spareLetters = [...allLetters]
@@ -108,48 +108,48 @@ export class GameState {
   }
 }
 
-export class BoardObject {
-  constructor(boardRaw) {
-    this.currentBoard = this.buildBoard(boardRaw)
-    this.solution = boardRaw.solution
-    this.startSpareLetters = this.getSpareLetters(boardRaw)
-  }
+// export class BoardObject {
+//   constructor(boardRaw) {
+//     this.currentBoard = this.buildBoard(boardRaw)
+//     this.solution = boardRaw.solution
+//     this.currentSpareLetters = this.getSpareLetters(boardRaw)
+//   }
 
-  getSpareLetters(boardRaw) {
-    const allLetters = []
-    const lettersOnBoard = []
+//   getSpareLetters(boardRaw) {
+//     const allLetters = []
+//     const lettersOnBoard = []
 
-    for (let i = 0; i < boardRaw.solution.length; i++) {
-      for (let j = 0; j < boardRaw.solution[i].length; j++) {
-        if (boardRaw.solution[i][j]) allLetters.push(boardRaw.solution[i][j])
-      }
-    }
-    for (let i = 0; i < boardRaw.start.length; i++) {
-      for (let j = 0; j < boardRaw.start[i].length; j++) {
-        if (boardRaw.start[i][j]) lettersOnBoard.push(boardRaw.start[i][j])
-      }
-    }
-    const spareLetters = [...allLetters]
-    lettersOnBoard.forEach((letter) => {
-      spareLetters.splice(spareLetters.indexOf(letter), 1)
-    })
-    shuffleArray(spareLetters)
-    return spareLetters
-  }
+//     for (let i = 0; i < boardRaw.solution.length; i++) {
+//       for (let j = 0; j < boardRaw.solution[i].length; j++) {
+//         if (boardRaw.solution[i][j]) allLetters.push(boardRaw.solution[i][j])
+//       }
+//     }
+//     for (let i = 0; i < boardRaw.start.length; i++) {
+//       for (let j = 0; j < boardRaw.start[i].length; j++) {
+//         if (boardRaw.start[i][j]) lettersOnBoard.push(boardRaw.start[i][j])
+//       }
+//     }
+//     const spareLetters = [...allLetters]
+//     lettersOnBoard.forEach((letter) => {
+//       spareLetters.splice(spareLetters.indexOf(letter), 1)
+//     })
+//     shuffleArray(spareLetters)
+//     return spareLetters
+//   }
 
-  buildBoard(boardRaw) {
-    const newBoard = []
-    for (let i = 0; i < boardRaw.solution.length; i++) {
-      const newRow = []
-      for (let j = 0; j < boardRaw.solution[i].length; j++) {
-        let willContainLetter = false
-        if (boardRaw.solution[i][j]) {
-          willContainLetter = true
-        }
-        newRow.push(new Tile(boardRaw.start[i][j], i, j, willContainLetter))
-      }
-      newBoard.push(newRow)
-    }
-    return newBoard
-  }
-}
+//   buildBoard(boardRaw) {
+//     const newBoard = []
+//     for (let i = 0; i < boardRaw.solution.length; i++) {
+//       const newRow = []
+//       for (let j = 0; j < boardRaw.solution[i].length; j++) {
+//         let willContainLetter = false
+//         if (boardRaw.solution[i][j]) {
+//           willContainLetter = true
+//         }
+//         newRow.push(new Tile(boardRaw.start[i][j], i, j, willContainLetter))
+//       }
+//       newBoard.push(newRow)
+//     }
+//     return newBoard
+//   }
+// }
