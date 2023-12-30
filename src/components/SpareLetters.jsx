@@ -1,27 +1,5 @@
 import '../sass/letterContainer.scss'
 
-// export function xSpareLetters({ letters, handleOnDrag }) {
-//   const displayLetters = Array.from(
-//     { length: Math.max(10, letters.length) },
-//     (_, index) => letters[index] || ''
-//   )
-
-//   return (
-//     <div className="letterContainer">
-//       {displayLetters.map((letter, index) => (
-//         <div
-//           key={index}
-//           className={`letter ${letter ? 'draggable' : ''}`}
-//           draggable={!!letter}
-//           onDragStart={(e) => letter && handleOnDrag(e, letter, index)}
-//         >
-//           {letter}
-//         </div>
-//       ))}
-//     </div>
-//   )
-// }
-
 function LetterTile({ letterObject }) {
   return (
     <div className="letterTile letter" draggable>
