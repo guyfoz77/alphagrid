@@ -13,7 +13,7 @@ function App() {
   return (
     <div className="mainContainer">
       <Board gameState={gameState} />
-      {/* <SpareLetters /> */}
+      <SpareLetters gameState={gameState} />
     </div>
   )
 }
