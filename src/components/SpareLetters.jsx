@@ -14,7 +14,6 @@ export function SpareLetters({ gameState }) {
     if (!letter.onBoard) return letter
   })
 
-  console.log(letters)
   return (
     <div className="letterContainer">
       {lettersToDisplay.map((letter, index) => (

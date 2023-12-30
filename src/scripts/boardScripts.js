@@ -1,13 +1,13 @@
-function Tile(letter, row, col, willContainLetter) {
-  //tile constuctor
-  return {
-    letter: letter,
-    row: row,
-    col: col,
-    willContainLetter: willContainLetter,
-    active: false,
-  }
-}
+// function Tile(letter, row, col, willContainLetter) {
+//   //tile constuctor
+//   return {
+//     letter: letter,
+//     row: row,
+//     col: col,
+//     willContainLetter: willContainLetter,
+//     active: false,
+//   }
+// }
 
 function shuffleArray(array) {
   //Fisher–Yates shuffle algorithm
@@ -26,11 +26,12 @@ class LetterObject {
   }
 }
 
-export class GameState {
+export class InitGameState {
   constructor(boardRaw) {
     this.currentBoard = boardRaw.current
     this.solution = boardRaw.solution
     this.letters = this.getLetters(boardRaw)
+    this.activeTile = { col: '', row: '' }
   }
 
   getLetters(boardRaw) {
