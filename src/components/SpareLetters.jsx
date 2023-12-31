@@ -1,10 +1,10 @@
 import '../sass/letterContainer.scss'
 
-function LetterTile({ letterObject, handleSpareTileClick }) {
+function LetterTile({ letterObject, handleSpareTileClick, index }) {
   return (
     <div
       className="letterTile letter"
-      onClick={() => handleSpareTileClick(letterObject)}
+      onClick={() => handleSpareTileClick(letterObject, index)}
     >
       <h3>{letterObject.letter}</h3>
     </div>
@@ -23,6 +23,7 @@ export function SpareLetters({ gameState, handleSpareTileClick }) {
         <LetterTile
           letterObject={letter}
           key={index}
+          index={index}
           handleSpareTileClick={handleSpareTileClick}
         />
       ))}

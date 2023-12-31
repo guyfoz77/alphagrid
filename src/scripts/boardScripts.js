@@ -18,11 +18,11 @@ function shuffleArray(array) {
 }
 
 export class LetterObject {
-  constructor(letter, onBoard, boardPosition, letterContainerPosition) {
+  constructor(letter, onBoard, boardPosition) {
     this.letter = letter
     this.onBoard = onBoard
     this.boardPosition = boardPosition
-    this.letterContainerPosition = letterContainerPosition
+    // this.letterContainerPosition = letterContainerPosition
   }
 }
 
@@ -46,7 +46,7 @@ export class InitGameState {
             row: i,
           }
           letters.push(
-            new LetterObject(boardRaw.current[i][j], true, boardPosition, null)
+            new LetterObject(boardRaw.current[i][j], true, boardPosition)
           )
         }
       }
@@ -71,7 +71,7 @@ export class InitGameState {
     })
     shuffleArray(spareLetters)
     for (let i = 0; i < spareLetters.length; i++) {
-      letters.push(new LetterObject(spareLetters[i], false, null, i))
+      letters.push(new LetterObject(spareLetters[i], false, null))
     }
     return letters
   }
