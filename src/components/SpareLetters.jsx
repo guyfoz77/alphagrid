@@ -1,11 +1,15 @@
 import '../sass/letterContainer.scss'
 
 function LetterTile({ letterObject, handleSpareTileClick, index }) {
-  return (
+  return !letterObject.onBoard ? (
     <div
       className="letterTile letter"
       onClick={() => handleSpareTileClick(letterObject, index)}
     >
+      <h3>{letterObject.letter}</h3>
+    </div>
+  ) : (
+    <div className="letterTile letter inactive">
       <h3>{letterObject.letter}</h3>
     </div>
   )
@@ -13,13 +17,13 @@ function LetterTile({ letterObject, handleSpareTileClick, index }) {
 
 export function SpareLetters({ gameState, handleSpareTileClick }) {
   const letters = [...gameState.letters]
-  const lettersToDisplay = letters.filter((letter) => {
-    if (!letter.onBoard) return letter
-  })
+  // const lettersToDisplay = letters.filter((letter) => {
+  //   if (!letter.onBoard) return letter
+  // })
 
   return (
     <div className="letterContainer">
-      {lettersToDisplay.map((letter, index) => (
+      {letters.map((letter, index) => (
         <LetterTile
           letterObject={letter}
           key={index}
