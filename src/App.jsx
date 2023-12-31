@@ -48,23 +48,31 @@ function App() {
       activeBoardPosition.col
     ] = letterClicked
     const clickedLetterArrayPosition = key //double check this. is the fact that the array is randomised going to affect this?
-    const newBoardLetter = { ...newLetters[clickedLetterArrayPosition] }
-    newBoardLetter.onBoard = true
-    newBoardLetter.boardPosition = {
-      col: activeBoardPosition.col,
-      row: activeBoardPosition.row,
-    }
+    const newBoardLetter = new LetterObject(
+      newLetters[clickedLetterArrayPosition].letter,
+      true,
+      {
+        col: activeBoardPosition.col,
+        row: activeBoardPosition.row,
+      }
+    )
     newLetters[clickedLetterArrayPosition] = newBoardLetter
 
     if (activeLetter) {
       const activeLetterArrayPosition = newLetters.findIndex((letterObject) => {
-        letterObject.onBoard &&
+        return (
+          letterObject.onBoard &&
           letterObject.boardPosition.col === newGameState.activeTile.col &&
           letterObject.boardPosition.row === newGameState.activeTile.row
+        )
       })
-      const newSpareLetter = { ...newLetters[activeLetterArrayPosition] }
-      newSpareLetter.onBoard = false
-      newSpareLetter.boardPosition = { col: '', row: '' }
+      console.log(activeLetterArrayPosition)
+      const newSpareLetter = new LetterObject(
+        newLetters[activeLetterArrayPosition].letter,
+        false,
+        null
+      )
+
       newLetters[activeLetterArrayPosition] = newSpareLetter
     }
     console.log(clickedLetterArrayPosition)
