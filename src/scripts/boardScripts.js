@@ -17,7 +17,7 @@ function shuffleArray(array) {
   }
 }
 
-class LetterObject {
+export class LetterObject {
   constructor(letter, onBoard, boardPosition, letterContainerPosition) {
     this.letter = letter
     this.onBoard = onBoard
