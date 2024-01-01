@@ -23,8 +23,8 @@ export class InitGameState {
     this.currentBoard = boardRaw.current
     this.solution = boardRaw.solution
     this.letters = this.getLetters(boardRaw)
-    this.activeTile = { col: null, row: null }
-    this.previousActiveTile = { col: null, row: null }
+    this.activeTile = { col: '', row: '' }
+    this.previousActiveTile = { col: '', row: '' }
   }
 
   getLetters(boardRaw) {
