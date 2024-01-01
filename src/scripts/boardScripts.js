@@ -1,13 +1,4 @@
-// function Tile(letter, row, col, willContainLetter) {
-//   //tile constuctor
-//   return {
-//     letter: letter,
-//     row: row,
-//     col: col,
-//     willContainLetter: willContainLetter,
-//     active: false,
-//   }
-// }
+import { v4 as uuid } from 'uuid'
 
 function shuffleArray(array) {
   //Fisher–Yates shuffle algorithm
@@ -22,6 +13,7 @@ export class LetterObject {
     this.letter = letter
     this.onBoard = onBoard
     this.boardPosition = boardPosition
+    this.ID = uuid()
     // this.letterContainerPosition = letterContainerPosition
   }
 }
