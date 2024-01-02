@@ -139,8 +139,8 @@ function App() {
     } else if (indexOfActiveLetter != -1) {
       newGameState.letters[indexOfActiveLetter].onBoard = false
       newGameState.letters[indexOfActiveLetter].boardPosition = null
-      newGameState.currentBoard[newGameState.indexOfActiveLetter.row][
-        newGameState.indexOfActiveLetter.col
+      newGameState.currentBoard[newGameState.activeTile.row][
+        newGameState.activeTile.col
       ] = ''
     }
     setGameState(newGameState)
