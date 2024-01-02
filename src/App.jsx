@@ -105,6 +105,47 @@ function App() {
     return newActiveTile
   }
 
+  function handleBackspaceClick() {
+    const newGameState = _.cloneDeep(gameState)
+    const indexOfActiveLetter = newGameState.letters.findIndex((letter) => {
+      return (
+        letter.onBoard &&
+        letter.boardPosition.col === newGameState.activeTile.col &&
+        letter.boardPosition.row === newGameState.activeTile.row
+      )
+    })
+    const indexOfPreviousLetter = newGameState.letters.findIndex((letter) => {
+      return (
+        letter.onBoard &&
+        letter.boardPosition.col === newGameState.previousActiveTile.col &&
+        letter.boardPosition.row === newGameState.previousActiveTile.row
+      )
+    })
+
+    if (indexOfPreviousLetter != -1) {
+      newGameState.letters[indexOfPreviousLetter].onBoard = false
+      newGameState.letters[indexOfPreviousLetter].boardPosition = null
+      newGameState.currentBoard[newGameState.previousActiveTile.row][
+        newGameState.previousActiveTile.col
+      ] = ''
+      //this block executes if there is a previous active tile.
+      //same check here needs to be done as for when it is
+      //decided what tile to set as active tile.
+
+      //solution. change previous active tiles to store a history of active tiles.
+      //When backspace is pressed, the new active tile becomes the last element
+      //of the previous active tiles array.
+      //The array will then have the last element removed from it. (pop?)
+    } else if (indexOfActiveLetter != -1) {
+      newGameState.letters[indexOfActiveLetter].onBoard = false
+      newGameState.letters[indexOfActiveLetter].boardPosition = null
+      newGameState.currentBoard[newGameState.indexOfActiveLetter.row][
+        newGameState.indexOfActiveLetter.col
+      ] = ''
+    }
+    setGameState(newGameState)
+  }
+
   return (
     <div className="mainContainer">
       <Board
@@ -114,6 +155,7 @@ function App() {
       <SpareLetters
         gameState={gameState}
         handleSpareTileClick={handleSpareTileClick}
+        handleBackspaceClick={handleBackspaceClick}
       />
     </div>
   )
