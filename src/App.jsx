@@ -14,6 +14,7 @@ function App() {
   function handleBoardTileClick(colRow) {
     const newGameState = _.cloneDeep(gameState)
     newGameState.activeTile = colRow
+    newGameState.previousActiveTile = { row: '', col: '' }
     setGameState(newGameState)
   }
 
@@ -45,68 +46,10 @@ function App() {
     }
 
     const newActiveTile = getNewActiveTile()
+    newGameState.previousActiveTile = { ...newGameState.activeTile }
     newGameState.activeTile = { ...newActiveTile }
     setGameState(newGameState)
   }
-
-  // function getNewActiveTile() {
-  //   //if previousActiveTile is left of the current activeTile, new activeTile is right
-  //   //if previousActiveTile is up of the current activeTile, new activeTile is down
-  //   //if no previous activeTile exists, first check right then check down.
-  //   const newGameState = _.cloneDeep(gameState)
-  //   let newActiveTile = { ...newGameState.activeTile }
-  //   const currentActiveTile = { ...newGameState.activeTile }
-  //   console.log('activetile', newGameState.activeTile)
-
-  //   //if we are moving across the board
-  //   if (newGameState.previousActiveTile.col == currentActiveTile.col - 1) {
-  //     console.log('block 1')
-  //     newActiveTile.col++
-  //     if (!newGameState.solution[newActiveTile.row][newActiveTile.col]) {
-  //       newActiveTile = { col: '', row: '' }
-  //       newGameState.previousActiveTile = { col: '', row: '' }
-  //     }
-  //     newGameState.activeTile = newActiveTile
-  //     newGameState.previousActiveTile = { ...currentActiveTile }
-  //     return newActiveTile
-  //   }
-
-  //   //if we are moving down the board
-  //   if (!newGameState.previousActiveTile.row == currentActiveTile.row - 1) {
-  //     console.log('block 2')
-
-  //     newActiveTile.row++
-  //     if (newGameState.solution[newActiveTile.row][newActiveTile.col]) {
-  //       newActiveTile = { col: '', row: '' }
-  //       newGameState.previousActiveTile = { col: '', row: '' }
-  //     }
-  //     newGameState.activeTile = newActiveTile
-  //     newGameState.previousActiveTile = { ...currentActiveTile }
-  //     return newActiveTile
-  //   }
-
-  //   //if there was no previous active tile (just started moving)
-  //   console.log(`${newGameState.previousActiveTile.col}`)
-  //   if (!`${newGameState.previousActiveTile.col}`) {
-  //     if (
-  //       newGameState.solution[currentActiveTile.row][currentActiveTile.col + 1]
-  //     ) {
-  //       console.log('block 3')
-
-  //       newActiveTile.col++
-  //     }
-  //     if (
-  //       newGameState.solution[currentActiveTile.row + 1][currentActiveTile.col]
-  //     ) {
-  //       console.log('block 4')
-
-  //       newActiveTile.row++
-  //     }
-  //   }
-
-  //   newGameState.previousActiveTile = { ...currentActiveTile }
-  //   return newActiveTile
-  // }
 
   function getNewActiveTile() {
     const newGameState = _.cloneDeep(gameState)
@@ -118,14 +61,14 @@ function App() {
     if (newGameState.previousActiveTile.col === currentActiveTile.col - 1) {
       console.log('block 1')
       newActiveTile.col++
+      console.log(newGameState.solution[newActiveTile.row][newActiveTile.col])
 
-      if (newGameState.solution[newActiveTile.row][newActiveTile.col]) {
-        newActiveTile = { col: '', row: '' }
-        newGameState.previousActiveTile = { col: '', row: '' }
+      if (!newGameState.solution[newActiveTile.row][newActiveTile.col]) {
+        newActiveTile.col--
+        if (newGameState.solution[newActiveTile.row + 1][newActiveTile.col]) {
+          newActiveTile.row++
+        } else newActiveTile = { row: '', col: '' }
       }
-
-      newGameState.activeTile = newActiveTile
-      newGameState.previousActiveTile = { ...currentActiveTile }
       return newActiveTile
     }
 
@@ -133,37 +76,32 @@ function App() {
     if (newGameState.previousActiveTile.row === currentActiveTile.row - 1) {
       console.log('block 2')
       newActiveTile.row++
-
-      if (newGameState.solution[newActiveTile.row][newActiveTile.col]) {
-        newActiveTile = { col: '', row: '' }
-        newGameState.previousActiveTile = { col: '', row: '' }
+      if (!newGameState.solution[newActiveTile.row]) {
+        newActiveTile.row--
+        if (newGameState.solution[newActiveTile.row][newActiveTile.col + 1]) {
+          newActiveTile.col++
+        } else newActiveTile = { row: '', col: '' }
       }
-
-      newGameState.activeTile = newActiveTile
-      newGameState.previousActiveTile = { ...currentActiveTile }
       return newActiveTile
     }
 
     // If there was no previous active tile (just started moving)
-    console.log(`${newGameState.previousActiveTile.col}`)
+    console.log('previous active tile.col', newGameState.previousActiveTile)
     if (!newGameState.previousActiveTile.col) {
-      console.log('block 3')
-
       if (
         newGameState.solution[currentActiveTile.row][currentActiveTile.col + 1]
       ) {
+        console.log('block 3')
         newActiveTile.col++
       }
 
-      console.log('block 4')
       if (
         newGameState.solution[currentActiveTile.row + 1][currentActiveTile.col]
       ) {
+        console.log('block 4')
         newActiveTile.row++
       }
     }
-
-    newGameState.previousActiveTile = { ...currentActiveTile }
     return newActiveTile
   }
 
