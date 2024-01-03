@@ -24,6 +24,7 @@ export class InitGameState {
     this.solution = boardRaw.solution
     this.letters = this.getLetters(boardRaw)
     this.activeTile = { col: '', row: '' }
+    this.correctTiles = [] //if the board is initilsed with anything but an empty currentBoard, this will break. To fix you will need to run the handleCheckClick at init.
     this.previousActiveTiles = [{ col: '', row: '' }]
   }
 

@@ -144,13 +144,38 @@ function App() {
     setGameState(newGameState)
   }
 
+  function handleCheckClick() {
+    console.log('check button pressed')
+    const newGameState = _.cloneDeep(gameState)
+    const newCorrectTiles = []
+    for (let i = 0; i < newGameState.currentBoard.length; i++) {
+      const newRow = []
+      for (let j = 0; j < newGameState.currentBoard[i].length; j++) {
+        if (!newGameState.solution[i][j]) {
+          newRow.push('')
+          continue
+        }
+        if (newGameState.currentBoard[i][j] === newGameState.solution[i][j]) {
+          newRow.push('correct')
+          continue
+        }
+        newRow.push('incorrect')
+      }
+      newCorrectTiles.push(newRow)
+    }
+    console.table(newCorrectTiles)
+  }
+
   return (
     <div className="mainContainer">
       <Board
         gameState={gameState}
         handleBoardTileClick={handleBoardTileClick}
       />
-      <Buttons handleBackspaceClick={handleBackspaceClick} />
+      <Buttons
+        handleBackspaceClick={handleBackspaceClick}
+        handleCheckClick={handleCheckClick}
+      />
       <SpareLetters
         gameState={gameState}
         handleSpareTileClick={handleSpareTileClick}
