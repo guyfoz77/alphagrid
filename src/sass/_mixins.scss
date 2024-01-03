@@ -1,0 +1,17 @@
+@mixin buttonContainer() {
+  gap: 10px;
+  width: 90%;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+}
+
+@mixin button($aspect: 1) {
+  border: solid darkcyan;
+  display: flex;
+  place-content: center;
+  flex: 1;
+  aspect-ratio: $aspect;
+  font-size: 1.4rem;
+  margin: 5px;
+  border-radius: 5px;
+}

@@ -1,5 +1,4 @@
 import '../sass/letterContainer.scss'
-import backspaceSVG from '../assets/backspace_FILL0_wght400_GRAD0_opsz24.svg'
 
 function LetterTile({ letterObject, handleSpareTileClick, index }) {
   return !letterObject.onBoard ? (
@@ -16,19 +15,7 @@ function LetterTile({ letterObject, handleSpareTileClick, index }) {
   )
 }
 
-function Backspace({ handleBackspaceClick }) {
-  return (
-    <div className="letterTile letter" onClick={handleBackspaceClick}>
-      <img src={backspaceSVG} alt="Backspace button" />
-    </div>
-  )
-}
-
-export function SpareLetters({
-  gameState,
-  handleSpareTileClick,
-  handleBackspaceClick,
-}) {
+export function SpareLetters({ gameState, handleSpareTileClick }) {
   const letters = [...gameState.letters]
   // const lettersToDisplay = letters.filter((letter) => {
   //   if (!letter.onBoard) return letter
@@ -44,7 +31,6 @@ export function SpareLetters({
           handleSpareTileClick={handleSpareTileClick}
         />
       ))}
-      <Backspace handleBackspaceClick={handleBackspaceClick} />
     </div>
   )
 }

@@ -3,6 +3,7 @@ import './App.scss'
 import { useState } from 'react'
 import { Board } from './components/Board'
 import { SpareLetters } from './components/SpareLetters'
+import { Buttons } from './components/Buttons'
 import { testBoard } from './data'
 import { InitGameState } from './scripts/boardScripts'
 // import { LetterObject } from './scripts/boardScripts'
@@ -60,14 +61,10 @@ function App() {
         newGameState.previousActiveTiles.length - 1
       ],
     }
-    console.log('activetile', newGameState.activeTile)
 
     // If moving across the board (to the right)
     if (previousActiveTile.col === currentActiveTile.col - 1) {
-      console.log('block 1')
       newActiveTile.col++
-      console.log(newGameState.solution[newActiveTile.row][newActiveTile.col])
-
       if (!newGameState.solution[newActiveTile.row][newActiveTile.col]) {
         newActiveTile.col--
         if (newGameState.solution[newActiveTile.row + 1][newActiveTile.col]) {
@@ -79,7 +76,6 @@ function App() {
 
     // If moving down the board
     if (previousActiveTile.row === currentActiveTile.row - 1) {
-      console.log('block 2')
       newActiveTile.row++
       if (!newGameState.solution[newActiveTile.row]) {
         newActiveTile.row--
@@ -91,12 +87,10 @@ function App() {
     }
 
     // If there was no previous active tile (just started moving)
-    console.log('previous active tile.col', newGameState.previousActiveTiles)
     if (!previousActiveTile.col) {
       if (
         newGameState.solution[currentActiveTile.row][currentActiveTile.col + 1]
       ) {
-        console.log('block 3')
         newActiveTile.col++
         return newActiveTile
       }
@@ -104,7 +98,6 @@ function App() {
       if (
         newGameState.solution[currentActiveTile.row + 1][currentActiveTile.col]
       ) {
-        console.log('block 4')
         newActiveTile.row++
         return newActiveTile
       }
@@ -115,7 +108,8 @@ function App() {
   function handleBackspaceClick() {
     const newGameState = _.cloneDeep(gameState)
     const previousActiveTile = newGameState.previousActiveTiles.pop()
-    if (!`${previousActiveTile.col}`) return
+    // const newActiveTi
+    // if (!`${previousActiveTile.col}`) return
     if (!`${newGameState.activeTile.col}`) return
     const indexOfActiveLetter = newGameState.letters.findIndex((letter) => {
       return (
@@ -138,14 +132,6 @@ function App() {
       newGameState.currentBoard[previousActiveTile.row][
         previousActiveTile.col
       ] = ''
-      //this block executes if there is a previous active tile.
-      //same check here needs to be done as for when it is
-      //decided what tile to set as active tile.
-
-      //solution. change previous active tiles to store a history of active tiles.
-      //When backspace is pressed, the new active tile becomes the last element
-      //of the previous active tiles array.
-      //The array will then have the last element removed from it. (pop?)
     } else if (indexOfActiveLetter != -1) {
       newGameState.letters[indexOfActiveLetter].onBoard = false
       newGameState.letters[indexOfActiveLetter].boardPosition = null
@@ -163,10 +149,10 @@ function App() {
         gameState={gameState}
         handleBoardTileClick={handleBoardTileClick}
       />
+      <Buttons handleBackspaceClick={handleBackspaceClick} />
       <SpareLetters
         gameState={gameState}
         handleSpareTileClick={handleSpareTileClick}
-        handleBackspaceClick={handleBackspaceClick}
       />
     </div>
   )
