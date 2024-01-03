@@ -108,7 +108,7 @@ function App() {
   function handleBackspaceClick() {
     const newGameState = _.cloneDeep(gameState)
     const previousActiveTile = newGameState.previousActiveTiles.pop()
-    // const newActiveTi
+    let newActiveTile = { ...previousActiveTile }
     // if (!`${previousActiveTile.col}`) return
     if (!`${newGameState.activeTile.col}`) return
     const indexOfActiveLetter = newGameState.letters.findIndex((letter) => {
@@ -138,8 +138,9 @@ function App() {
       newGameState.currentBoard[newGameState.activeTile.row][
         newGameState.activeTile.col
       ] = ''
+      newActiveTile = { ...newGameState.activeTile }
     }
-    newGameState.activeTile = { ...previousActiveTile }
+    newGameState.activeTile = { ...newActiveTile }
     setGameState(newGameState)
   }
 
