@@ -14,7 +14,7 @@ function App() {
   function handleBoardTileClick(colRow) {
     const newGameState = _.cloneDeep(gameState)
     newGameState.activeTile = colRow
-    newGameState.previousActiveTile = { row: '', col: '' }
+    newGameState.previousActiveTiles.push({ row: '', col: '' })
     setGameState(newGameState)
   }
 
@@ -46,7 +46,7 @@ function App() {
     }
 
     const newActiveTile = getNewActiveTile()
-    newGameState.previousActiveTile = { ...newGameState.activeTile }
+    newGameState.previousActiveTiles.push({ ...newGameState.activeTile })
     newGameState.activeTile = { ...newActiveTile }
     setGameState(newGameState)
   }
@@ -55,10 +55,15 @@ function App() {
     const newGameState = _.cloneDeep(gameState)
     let newActiveTile = { ...newGameState.activeTile }
     const currentActiveTile = { ...newGameState.activeTile }
+    const previousActiveTile = {
+      ...newGameState.previousActiveTiles[
+        newGameState.previousActiveTiles.length - 1
+      ],
+    }
     console.log('activetile', newGameState.activeTile)
 
     // If moving across the board (to the right)
-    if (newGameState.previousActiveTile.col === currentActiveTile.col - 1) {
+    if (previousActiveTile.col === currentActiveTile.col - 1) {
       console.log('block 1')
       newActiveTile.col++
       console.log(newGameState.solution[newActiveTile.row][newActiveTile.col])
@@ -73,7 +78,7 @@ function App() {
     }
 
     // If moving down the board
-    if (newGameState.previousActiveTile.row === currentActiveTile.row - 1) {
+    if (previousActiveTile.row === currentActiveTile.row - 1) {
       console.log('block 2')
       newActiveTile.row++
       if (!newGameState.solution[newActiveTile.row]) {
@@ -86,13 +91,14 @@ function App() {
     }
 
     // If there was no previous active tile (just started moving)
-    console.log('previous active tile.col', newGameState.previousActiveTile)
-    if (!newGameState.previousActiveTile.col) {
+    console.log('previous active tile.col', newGameState.previousActiveTiles)
+    if (!previousActiveTile.col) {
       if (
         newGameState.solution[currentActiveTile.row][currentActiveTile.col + 1]
       ) {
         console.log('block 3')
         newActiveTile.col++
+        return newActiveTile
       }
 
       if (
@@ -100,6 +106,7 @@ function App() {
       ) {
         console.log('block 4')
         newActiveTile.row++
+        return newActiveTile
       }
     }
     return newActiveTile
@@ -107,6 +114,9 @@ function App() {
 
   function handleBackspaceClick() {
     const newGameState = _.cloneDeep(gameState)
+    const previousActiveTile = newGameState.previousActiveTiles.pop()
+    if (!`${previousActiveTile.col}`) return
+    if (!`${newGameState.activeTile.col}`) return
     const indexOfActiveLetter = newGameState.letters.findIndex((letter) => {
       return (
         letter.onBoard &&
@@ -117,16 +127,16 @@ function App() {
     const indexOfPreviousLetter = newGameState.letters.findIndex((letter) => {
       return (
         letter.onBoard &&
-        letter.boardPosition.col === newGameState.previousActiveTile.col &&
-        letter.boardPosition.row === newGameState.previousActiveTile.row
+        letter.boardPosition.col === previousActiveTile.col &&
+        letter.boardPosition.row === previousActiveTile.row
       )
     })
 
     if (indexOfPreviousLetter != -1) {
       newGameState.letters[indexOfPreviousLetter].onBoard = false
       newGameState.letters[indexOfPreviousLetter].boardPosition = null
-      newGameState.currentBoard[newGameState.previousActiveTile.row][
-        newGameState.previousActiveTile.col
+      newGameState.currentBoard[previousActiveTile.row][
+        previousActiveTile.col
       ] = ''
       //this block executes if there is a previous active tile.
       //same check here needs to be done as for when it is
@@ -143,6 +153,7 @@ function App() {
         newGameState.activeTile.col
       ] = ''
     }
+    newGameState.activeTile = { ...previousActiveTile }
     setGameState(newGameState)
   }
 
