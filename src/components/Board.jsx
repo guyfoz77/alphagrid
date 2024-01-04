@@ -6,17 +6,25 @@ function Tile({
   handleBoardTileClick,
   colRow,
   isActiveTile,
+  correctStatus,
 }) {
-  return letter ? (
-    <div
-      className={isActiveTile ? 'boardLetter active' : 'boardLetter occupied'}
-      onClick={() => handleBoardTileClick(colRow)}
-    >
-      {currentLetter}{' '}
-    </div>
-  ) : (
-    <div className="boardLetter blank"></div>
-  )
+  if (letter) {
+    console.log(correctStatus)
+    return (
+      <div
+        className={
+          isActiveTile
+            ? `boardLetter active ${correctStatus && 'correct'}`
+            : `boardLetter occupied ${correctStatus && 'correct'}`
+        }
+        onClick={!correctStatus ? () => handleBoardTileClick(colRow) : null}
+      >
+        {currentLetter}{' '}
+      </div>
+    )
+  } else {
+    return <div className="boardLetter blank"></div>
+  }
 }
 
 function BoardRow({
@@ -25,7 +33,9 @@ function BoardRow({
   handleBoardTileClick,
   rowNumber,
   activeTile,
+  correctTiles,
 }) {
+  console.log(correctTiles)
   return (
     <div className="boardRow">
       {row.map((letter, index) => (
@@ -39,6 +49,7 @@ function BoardRow({
             JSON.stringify(activeTile) ==
             JSON.stringify({ col: index, row: rowNumber })
           }
+          correctStatus={correctTiles[rowNumber][index]}
         />
       ))}
     </div>
@@ -56,6 +67,7 @@ export function Board({ gameState, handleBoardTileClick }) {
           currentRow={gameState.currentBoard[index]}
           handleBoardTileClick={handleBoardTileClick}
           activeTile={gameState.activeTile}
+          correctTiles={gameState.correctTiles}
         />
       ))}
     </div>

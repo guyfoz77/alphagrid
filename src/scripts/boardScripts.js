@@ -1,3 +1,4 @@
+import { forEach } from 'lodash'
 import { v4 as uuid } from 'uuid'
 
 function shuffleArray(array) {
@@ -24,8 +25,21 @@ export class InitGameState {
     this.solution = boardRaw.solution
     this.letters = this.getLetters(boardRaw)
     this.activeTile = { col: '', row: '' }
-    this.correctTiles = [] //if the board is initilsed with anything but an empty currentBoard, this will break. To fix you will need to run the handleCheckClick at init.
+    this.correctTiles = this.getCorrectTiles(boardRaw) //if the board is initilsed with anything but an empty currentBoard, this will break. To fix you will need to run the handleCheckClick at init.
     this.previousActiveTiles = [{ col: '', row: '' }]
+  }
+
+  getCorrectTiles(boardRaw) {
+    //update this if you intend to pre fill some correct tiles
+    const board = []
+    boardRaw.solution.forEach((row) => {
+      const newRow = []
+      row.forEach(() => {
+        newRow.push('')
+      })
+      board.push(newRow)
+    })
+    return board
   }
 
   getLetters(boardRaw) {

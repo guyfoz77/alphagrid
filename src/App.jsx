@@ -34,7 +34,6 @@ function App() {
       )
     })
 
-    //set currentboard, then set the letter.onBoard to true
     newGameState.currentBoard[activeTile.row][activeTile.col] =
       letterObject.letter
     newGameState.letters[indexOfLetterClicked].onBoard = true
@@ -49,6 +48,10 @@ function App() {
     const newActiveTile = getNewActiveTile()
     newGameState.previousActiveTiles.push({ ...newGameState.activeTile })
     newGameState.activeTile = { ...newActiveTile }
+
+    //check if new active tile is solved - if it is, call getNewActiveTile again.
+    // const newActiveTileSolved = newGameState.correctTiles[]
+
     setGameState(newGameState)
   }
 
@@ -148,6 +151,8 @@ function App() {
     console.log('check button pressed')
     const newGameState = _.cloneDeep(gameState)
     const newCorrectTiles = []
+    newGameState.activeTile = { col: '', row: '' }
+    newGameState.previousActiveTiles = [{ col: '', row: '' }]
     for (let i = 0; i < newGameState.currentBoard.length; i++) {
       const newRow = []
       for (let j = 0; j < newGameState.currentBoard[i].length; j++) {
@@ -156,14 +161,15 @@ function App() {
           continue
         }
         if (newGameState.currentBoard[i][j] === newGameState.solution[i][j]) {
-          newRow.push('correct')
+          newRow.push(true)
           continue
         }
-        newRow.push('incorrect')
+        newRow.push(false)
       }
       newCorrectTiles.push(newRow)
     }
-    console.table(newCorrectTiles)
+    newGameState.correctTiles = newCorrectTiles
+    setGameState(newGameState)
   }
 
   return (
