@@ -45,17 +45,25 @@ function App() {
       newGameState.letters[indexOfActiveLetter].boardPosition = null
     }
 
-    const newActiveTile = getNewActiveTile()
+    let newActiveTile = getNewActiveTile(newGameState)
     newGameState.previousActiveTiles.push({ ...newGameState.activeTile })
     newGameState.activeTile = { ...newActiveTile }
 
-    //check if new active tile is solved - if it is, call getNewActiveTile again.
-    // const newActiveTileSolved = newGameState.correctTiles[]
+    while (
+      newGameState.correctTiles[newGameState.activeTile.row] &&
+      newGameState.correctTiles[newGameState.activeTile.row][
+        newGameState.activeTile.col
+      ]
+    ) {
+      newActiveTile = getNewActiveTile(newGameState)
+      newGameState.previousActiveTiles.push({ ...newGameState.activeTile })
+      newGameState.activeTile = { ...newActiveTile }
+    }
 
     setGameState(newGameState)
   }
 
-  function getNewActiveTile() {
+  function getNewActiveTile(gameState) {
     const newGameState = _.cloneDeep(gameState)
     let newActiveTile = { ...newGameState.activeTile }
     const currentActiveTile = { ...newGameState.activeTile }
@@ -99,6 +107,7 @@ function App() {
       }
 
       if (
+        newGameState.solution[currentActiveTile.row + 1] &&
         newGameState.solution[currentActiveTile.row + 1][currentActiveTile.col]
       ) {
         newActiveTile.row++
@@ -148,7 +157,6 @@ function App() {
   }
 
   function handleCheckClick() {
-    console.log('check button pressed')
     const newGameState = _.cloneDeep(gameState)
     const newCorrectTiles = []
     newGameState.activeTile = { col: '', row: '' }

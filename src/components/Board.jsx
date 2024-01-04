@@ -9,7 +9,6 @@ function Tile({
   correctStatus,
 }) {
   if (letter) {
-    console.log(correctStatus)
     return (
       <div
         className={
@@ -35,7 +34,6 @@ function BoardRow({
   activeTile,
   correctTiles,
 }) {
-  console.log(correctTiles)
   return (
     <div className="boardRow">
       {row.map((letter, index) => (

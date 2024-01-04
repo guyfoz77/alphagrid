@@ -5,9 +5,12 @@
 
   .letter {
     @include mixins.button;
+    background-color: darkcyan;
+    color: black;
   }
   .inactive {
     border: solid grey;
     color: grey;
+    background-color: transparent;
   }
 }
