@@ -4,7 +4,7 @@
   // height: 400px;
   width: 90%;
   // max-width: 300px;
-  border: solid white;
+  // border: solid rgb(255, 255, 255);
   // aspect-ratio: 1;
 
   .boardRow {
@@ -12,7 +12,7 @@
     flex: 1;
 
     .boardLetter {
-      border: solid darkcyan;
+      // border: solid darkcyan;
       display: flex;
       place-content: center;
       flex: 1;
@@ -26,9 +26,11 @@
     }
     .active {
       border: solid yellow;
+      // box-shadow: 3px 3px yellow;
     }
     .correct {
       border: solid green;
+      background-color: darkgreen;
     }
     .correct.active {
       background-color: red;
