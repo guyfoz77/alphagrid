@@ -180,8 +180,35 @@ function App() {
     setGameState(newGameState)
   }
 
+  function handleClearClick() {
+    const newGameState = _.cloneDeep(gameState)
+
+    for (let i = 0; i < newGameState.correctTiles.length; i++) {
+      for (let j = 0; j < newGameState.correctTiles[i].length; j++) {
+        if (
+          newGameState.correctTiles[i][j] !== false ||
+          newGameState.currentBoard[i][j] === ''
+        )
+          continue
+        const indexOfLetter = newGameState.letters.findIndex((letter) => {
+          return (
+            letter.onBoard &&
+            letter.boardPosition.col == j &&
+            letter.boardPosition.row == i
+          )
+        })
+        newGameState.letters[indexOfLetter].onBoard = false
+        newGameState.letters[indexOfLetter].boardPosition = null
+        newGameState.currentBoard[i][j] = ''
+        newGameState.activeTile = { col: '', row: '' }
+      }
+    }
+    setGameState(newGameState)
+  }
+
   return (
     <div className="mainContainer">
+      <h1>{gameState.clue}</h1>
       <Board
         gameState={gameState}
         handleBoardTileClick={handleBoardTileClick}
@@ -189,6 +216,7 @@ function App() {
       <Buttons
         handleBackspaceClick={handleBackspaceClick}
         handleCheckClick={handleCheckClick}
+        handleClearClick={handleClearClick}
       />
       <SpareLetters
         gameState={gameState}
