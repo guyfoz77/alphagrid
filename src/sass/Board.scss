@@ -9,7 +9,7 @@
 
   .boardRow {
     display: flex;
-    flex: 1;
+    // flex: 1;
 
     .boardLetter {
       // border: solid darkcyan;
@@ -23,6 +23,7 @@
     }
     .occupied {
       border: solid purple;
+      cursor: pointer;
     }
     .active {
       border: solid yellow;
@@ -34,6 +35,9 @@
     }
     .correct.active {
       background-color: red;
+    }
+    .blank {
+      border: solid transparent;
     }
   }
 }

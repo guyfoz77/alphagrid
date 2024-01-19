@@ -6,12 +6,13 @@
 }
 
 @mixin button($aspect: 1) {
+  cursor: pointer;
   border: solid darkcyan;
   display: flex;
   place-content: center;
   flex: 1;
   aspect-ratio: $aspect;
-  font-size: 100%;
+  font-size: 1.4rem;
   margin: 5px;
   border-radius: 5px;
 }

@@ -4,13 +4,15 @@ import { useState } from 'react'
 import { Board } from './components/Board'
 import { SpareLetters } from './components/SpareLetters'
 import { Buttons } from './components/Buttons'
-import { testBoard } from './data'
+import { puzzles } from './data'
 import { InitGameState } from './scripts/boardScripts'
 // import { LetterObject } from './scripts/boardScripts'
 import _ from 'lodash'
+import githubImage from './assets/github-mark-9035e861.svg'
 
 function App() {
-  const [gameState, setGameState] = useState(new InitGameState(testBoard))
+  const [puzzleNumber, setPuzzleNumber] = useState(0)
+  const [gameState, setGameState] = useState(new InitGameState(puzzles[0]))
 
   function handleBoardTileClick(colRow) {
     const newGameState = _.cloneDeep(gameState)
@@ -206,6 +208,20 @@ function App() {
     setGameState(newGameState)
   }
 
+  function handleRefreshClick() {
+    // console.log('cliock')
+    // let newPuzzleNumber = gameState.currentPuzzle
+    // newPuzzleNumber++
+    // if (newPuzzleNumber >= puzzles.length) newPuzzleNumber = 0
+    // setGameState(new InitGameState(puzzles[newPuzzleNumber], newPuzzleNumber))
+
+    let newPuzzleNumber = puzzleNumber
+    newPuzzleNumber++
+    if (newPuzzleNumber >= puzzles.length) newPuzzleNumber = 0
+    setPuzzleNumber(newPuzzleNumber)
+    setGameState(new InitGameState(puzzles[newPuzzleNumber]))
+  }
+
   return (
     <div className="mainContainer">
       <h1>{gameState.clue}</h1>
@@ -217,11 +233,26 @@ function App() {
         handleBackspaceClick={handleBackspaceClick}
         handleCheckClick={handleCheckClick}
         handleClearClick={handleClearClick}
+        handleRefreshClick={handleRefreshClick}
       />
       <SpareLetters
         gameState={gameState}
         handleSpareTileClick={handleSpareTileClick}
       />
+      <footer>
+        <a
+          className="githubLinkContainer"
+          href="https://github.com/guyfoz77"
+          target="_blank"
+          rel="noreferrer"
+        >
+          <img src={githubImage} aria-description="github mark" />
+
+          <p>
+            <i>Made by Guy Foster</i>
+          </p>
+        </a>
+      </footer>
     </div>
   )
 }

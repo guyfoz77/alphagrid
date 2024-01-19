@@ -18,7 +18,7 @@ function Tile({
         }
         onClick={!correctStatus ? () => handleBoardTileClick(colRow) : null}
       >
-        {currentLetter}{' '}
+        {currentLetter}
       </div>
     )
   } else {

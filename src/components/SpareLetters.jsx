@@ -6,12 +6,10 @@ function LetterTile({ letterObject, handleSpareTileClick, index }) {
       className="letterTile letter"
       onClick={() => handleSpareTileClick(letterObject, index)}
     >
-      <h3>{letterObject.letter}</h3>
+      {letterObject.letter}
     </div>
   ) : (
-    <div className="letterTile letter inactive">
-      <h3>{letterObject.letter}</h3>
-    </div>
+    <div className="letterTile letter inactive">{letterObject.letter}</div>
   )
 }
 

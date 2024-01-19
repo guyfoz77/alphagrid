@@ -4,7 +4,7 @@
   @include mixins.buttonContainer;
 
   .letter {
-    @include mixins.button;
+    @include mixins.button(1);
     background-color: darkcyan;
     color: black;
   }
